@@ -23,6 +23,7 @@ export class CameraManager {
 
     protected _activeCamera: Camera;
     protected _cameras: Camera[] = [];
+    protected _aspect: number;
 
     protected constructor() {}
 
@@ -32,6 +33,14 @@ export class CameraManager {
 
     get activeCamera() {
         return this._activeCamera;
+    }
+
+    get aspect() {
+        return this._aspect;
+    }
+
+    set aspect(value: number) {
+        this._aspect = value;
     }
 
     activate(name: string) {

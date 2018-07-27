@@ -21,13 +21,14 @@ export class Substance {
     }
 
     render(context: WebGLRenderingContext, indexSize: number) {
+        const cameraManagerInstance = CameraManager.instance;
         let projectionMatrix = Matrix4x4.perspective({
             fovYRadian: 1.1,
-            aspectRatio: 1,
+            aspectRatio: cameraManagerInstance.aspect,
             near: 0.001,
             far: 1000,
         });
-        const camera = CameraManager.instance.activeCamera;
+        const camera = cameraManagerInstance.activeCamera;
         let viewMatrix = camera.transform.matrix;
 
         this._template.material.shader.fixedUniforms.forEach(uniform => {
