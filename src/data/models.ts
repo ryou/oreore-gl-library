@@ -1,0 +1,26 @@
+export const modelDefinitions = [
+    {
+        id: 'cube',
+        path: './models/cube.obj',
+    },
+    {
+        id: 'sphere',
+        path: './models/sphere.obj',
+    },
+    {
+        id: 'smoothsphere',
+        path: './models/smoothsphere.obj',
+    },
+    {
+        id: 'torus',
+        path: './models/torus.obj',
+    },
+    {
+        id: 'smoothtorus',
+        path: './models/smoothtorus.obj',
+    },
+    {
+        id: 'skybox',
+        path: './models/skybox.obj',
+    },
+];

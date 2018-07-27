@@ -1,0 +1,23 @@
+{
+    "name": "oreore-gl-library",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "watch:ts": "tsc -w",
+        "watch:webpack": "webpack -w --mode development",
+        "start": "npm run watch:ts & npm run watch:webpack"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jest": "^23.1.5",
+        "jest": "^23.4.0",
+        "ts-jest": "^23.0.0",
+        "typescript": "^2.9.2",
+        "webpack": "^4.16.1",
+        "webpack-cli": "^3.0.8"
+    },
+    "dependencies": {}
+}

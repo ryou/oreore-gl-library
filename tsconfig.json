@@ -1,0 +1,75 @@
+{
+    "compilerOptions": {
+        // 変換するJavaScriptのバージョンを指定
+        // とりあえず、'ES5', 'ES2015', 'ES2016', 'ES2017'のどれかで十分
+        /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
+        // TODO: ここをES2015にすると、vector_base.tsのreduceでエラーが発生する。原因不明
+        "target": "ES5",
+
+        // モジュールの形式を指定
+        // 'commonjs', 'es2015'で十分
+        /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
+        "module": "commonjs",
+
+        // JSファイルもコンパイルするか
+        // コンパイルされる際は、targetの指定に従って変換される。
+        /* Allow javascript files to be compiled. */
+        // "allowJs": true,
+
+        // JSファイルに関してもエラーチェックをするか
+        /* Report errors in .js files. */
+        // "checkJs": true,
+
+        // 型定義ファイルを出力するか
+        // allowJs: trueと同時に適用は出来ない。
+        /* Generates corresponding '.d.ts' file. */
+        "declaration": true,
+
+        // ソースマップを出力するか
+        /* Generates corresponding '.map' file. */
+        // "sourceMap": true,
+
+        // 出力先ディレクトリ
+        /* Redirect output structure to the directory. */
+        "outDir": "./lib",
+
+        // コメントを削除するか
+        /* Do not emit comments to output. */
+        "removeComments": false,
+
+        // エラーチェックが厳密になる
+        /* Enable all strict type-checking options. */
+        "strict": true,
+        "strictPropertyInitialization": false,
+
+
+        /* strict設定には含まれていない追加のエラーチェック */
+
+        // 未使用のローカル変数の存在をエラーとするか
+        /* Report errors on unused locals. */
+        "noUnusedLocals": true,
+
+        // 未使用の引数の存在をエラーとするか
+        /* Report errors on unused parameters. */
+        "noUnusedParameters": true,
+
+        // 不明…これを有効にすることでエラーとするパターンがわからん
+        /* Report error when not all code paths in function return a value. */
+        // "noImplicitReturns": false,
+
+        // switch分のフォールスルーを許容するか
+        // これをtrueにしていてても、caseブロックに何も書かれていないときはエラーにならない。
+        /* Report errors for fallthrough cases in switch statement. */
+        "noFallthroughCasesInSwitch": true,
+
+        "lib": ["dom", "es5", "es2015.promise", "es2015.core"],
+    },
+    // コンパイル対象の指定
+    "include": [
+        "src/**/*"
+    ],
+    // コンパイル除外対象の指定
+    "exclude": [
+        "node_modules"
+    ]
+}
