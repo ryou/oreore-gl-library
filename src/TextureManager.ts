@@ -1,4 +1,4 @@
-import { textures, TEXTURE_TYPE } from './data/textures';
+import { textures } from './data/textures';
 
 export interface TextureDefinition {
     id: string;
@@ -31,9 +31,15 @@ export class TextureManager {
     loadTextures() {
         const promises = textures.map(textureDefinition => {
             const type = textureDefinition.type;
-            if (type === TEXTURE_TYPE.NORMAL) return this.loadTexture(textureDefinition);
-            else if (type === TEXTURE_TYPE.CUBEMAP) return this.loadCubemapTexture(textureDefinition);
-            else return Promise.resolve();
+            switch(type) {
+                case 'normal':
+                    return this.loadTexture(textureDefinition);
+                case 'cubemap':
+                    return this.loadCubemapTexture(textureDefinition);
+                default:
+                    console.error(`texture type ${type} is invalid.`);
+                    return Promise.resolve();
+            }
         });
 
         return Promise.all(promises);
