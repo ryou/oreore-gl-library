@@ -1,5 +1,4 @@
 import { TextureManager } from './TextureManager';
-import { Float32Vector3, Float32Vector4 } from './float32vector';
 import { Matrix4x4 } from './matrix';
 
 export enum ShaderUniformType {
@@ -28,7 +27,7 @@ export abstract class ShaderUniformBase {
 }
 
 export class ShaderUniformColor extends ShaderUniformBase {
-    constructor(name: string, protected _defaultValue: Float32Vector4) {
+    constructor(name: string, protected _defaultValue: number[]) {
         super(name, ShaderUniformType.Color);
     }
 
@@ -36,15 +35,20 @@ export class ShaderUniformColor extends ShaderUniformBase {
         return this._defaultValue;
     }
 
-    setGLUniform(context: WebGLRenderingContext, program: WebGLProgram, value: Float32Vector4) {
+    setGLUniform(context: WebGLRenderingContext, program: WebGLProgram, value: number[]) {
+        if (value.length !== 4) {
+            console.error(`value length is invalid.`);
+            return;
+        }
+
         const location = context.getUniformLocation(program, this._name);
-        if (location !== null) context.uniform4f(location, value.x, value.y, value.z, value.w);
+        if (location !== null) context.uniform4f(location, value[0], value[1], value[2], value[3]);
         else console.error(`${this.name} location is null.`);
     }
 }
 
 export class ShaderUniformVector3 extends ShaderUniformBase {
-    constructor(name: string, protected _defaultValue: Float32Vector3) {
+    constructor(name: string, protected _defaultValue: number[]) {
         super(name, ShaderUniformType.Color);
     }
 
@@ -52,9 +56,14 @@ export class ShaderUniformVector3 extends ShaderUniformBase {
         return this._defaultValue;
     }
 
-    setGLUniform(context: WebGLRenderingContext, program: WebGLProgram, value: Float32Vector3) {
+    setGLUniform(context: WebGLRenderingContext, program: WebGLProgram, value: number[]) {
+        if (value.length !== 3) {
+            console.error(`${this.name} value length is invalid.`);
+            return;
+        }
+
         const location = context.getUniformLocation(program, this._name);
-        if (location !== null) context.uniform3f(location, value.x, value.y, value.z);
+        if (location !== null) context.uniform3f(location, value[0], value[1], value[2]);
         else console.error(`${this.name} location is null.`);
     }
 }

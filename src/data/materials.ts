@@ -1,5 +1,3 @@
-import { Float32Vector4 } from '../float32vector';
-
 export const materialDefinitions = [
     {
         id: 'standard',
@@ -7,7 +5,7 @@ export const materialDefinitions = [
         options: [
             {
                 name: 'color',
-                value: new Float32Vector4(1.0, 1.0, 1.0, 1.0),
+                value: [1.0, 1.0, 1.0, 1.0],
             },
             {
                 name: 'mainTexture',
@@ -33,7 +31,7 @@ export const materialDefinitions = [
         options: [
             {
                 name: 'color',
-                value: new Float32Vector4(0.0, 1.0, 1.0, 1.0),
+                value: [0.0, 1.0, 1.0, 1.0],
             },
             {
                 name: 'metallic',

@@ -1,7 +1,6 @@
 import { shaderDefinitionArray } from './data/shader';
 import { Matrix4x4 } from './matrix';
 import { ShaderUniformBase, ShaderUniformFloat, ShaderUniformTexture, ShaderUniformMatrix4, ShaderUniformVector3, ShaderUniformColor, ShaderUniformTextureCubemap } from './ShaderUniform';
-import { Vector3, Vector4 } from './float32vector';
 
 export class Shader {
     protected _id: string;
@@ -24,7 +23,7 @@ export class Shader {
                     this._fixedUniforms.push(new ShaderUniformMatrix4(uniform, Matrix4x4.identity));
                     break;
                 case 'worldCameraPosition':
-                    this._fixedUniforms.push(new ShaderUniformVector3('worldCameraPosition', new Vector3(0, 0, 0)));
+                    this._fixedUniforms.push(new ShaderUniformVector3('worldCameraPosition', [0, 0, 0]));
                     break;
                 default:
                     console.error(`undefined fixed uniform ${uniform}`);
@@ -136,19 +135,10 @@ export class ShaderManager {
             let uniformBase: ShaderUniformBase;
             switch(uniform.type) {
                 case 'color':
-                    uniformBase = new ShaderUniformColor(uniform.name, new Vector4(
-                        uniform.options.default[0],
-                        uniform.options.default[1],
-                        uniform.options.default[2],
-                        uniform.options.default[3]
-                    ));
+                    uniformBase = new ShaderUniformColor(uniform.name, uniform.options.default);
                     break;
                 case 'vector3':
-                    uniformBase = new ShaderUniformVector3(uniform.name, new Vector3(
-                        uniform.options.default[0],
-                        uniform.options.default[1],
-                        uniform.options.default[2]
-                    ));
+                    uniformBase = new ShaderUniformVector3(uniform.name, uniform.options.default);
                     break;
                 case 'float':
                     uniformBase = new ShaderUniformFloat(uniform.name, uniform.options.default);

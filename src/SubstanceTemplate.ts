@@ -43,7 +43,7 @@ export class Substance {
                     this._template.material.shader.setUniform('projectionMatrix', projectionMatrix);
                     break;
                 case 'worldCameraPosition':
-                    this._template.material.shader.setUniform('worldCameraPosition', camera.transform.position);
+                    this._template.material.shader.setUniform('worldCameraPosition', camera.transform.position.values);
                     break;
                 default:
                     console.error(`undefined uniform ${uniform.name}`);
