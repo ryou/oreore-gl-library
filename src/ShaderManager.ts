@@ -1,7 +1,7 @@
 import { shaderDefinitionArray } from './data/shader';
 import { Matrix4x4 } from './matrix';
-import { ShaderUniformBase, ShaderUniformMatrix4, ShaderUniformVector3 } from './ShaderUniform';
-import { Vector3 } from './float32vector';
+import { ShaderUniformBase, ShaderUniformFloat, ShaderUniformTexture, ShaderUniformMatrix4, ShaderUniformVector3, ShaderUniformColor, ShaderUniformTextureCubemap } from './ShaderUniform';
+import { Vector3, Vector4 } from './float32vector';
 
 export class Shader {
     protected _id: string;
@@ -127,9 +127,44 @@ export class ShaderManager {
         return Promise.all(promises);
     }
 
-    loadShader(options: {id: string, fixedUniforms: string[], customUniforms: ShaderUniformBase[]}) {
+    loadShader(options: {id: string, fixedUniforms: string[], customUniforms: any[]}) {
         const loadVertexShader = fetch(`./shaders/${options.id}/vertex_shader.glsl`);
         const loadFragmentShader = fetch(`./shaders/${options.id}/fragment_shader.glsl`);
+
+        const cUniforms: ShaderUniformBase[] = [];
+        options.customUniforms.forEach(uniform => {
+            let uniformBase: ShaderUniformBase;
+            switch(uniform.type) {
+                case 'color':
+                    uniformBase = new ShaderUniformColor(uniform.name, new Vector4(
+                        uniform.options.default[0],
+                        uniform.options.default[1],
+                        uniform.options.default[2],
+                        uniform.options.default[3]
+                    ));
+                    break;
+                case 'vector3':
+                    uniformBase = new ShaderUniformVector3(uniform.name, new Vector3(
+                        uniform.options.default[0],
+                        uniform.options.default[1],
+                        uniform.options.default[2]
+                    ));
+                    break;
+                case 'float':
+                    uniformBase = new ShaderUniformFloat(uniform.name, uniform.options.default);
+                    break;
+                case 'texture':
+                    uniformBase = new ShaderUniformTexture(uniform.name, uniform.options.default, uniform.options.index);
+                    break;
+                case 'cubemap':
+                    uniformBase = new ShaderUniformTextureCubemap(uniform.name, uniform.options.default, uniform.options.index);
+                    break;
+                default:
+                    console.error(`uniform type ${uniform.type} is invalid.`);
+                    return;
+            }
+            cUniforms.push(uniformBase);
+        });
 
         return Promise.all([loadVertexShader, loadFragmentShader])
             .then(response => Promise.all([response[0].text(), response[1].text()]))
@@ -137,7 +172,7 @@ export class ShaderManager {
                 const vertexShaderSource = shaderSources[0];
                 const fragmentShaderSource = shaderSources[1];
 
-                const shader = new Shader(this._gl, options.id, vertexShaderSource, fragmentShaderSource, options.fixedUniforms, options.customUniforms);
+                const shader = new Shader(this._gl, options.id, vertexShaderSource, fragmentShaderSource, options.fixedUniforms, cUniforms);
                 this._shaders.push(shader);
             });
     }

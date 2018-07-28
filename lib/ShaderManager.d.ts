@@ -24,7 +24,7 @@ export declare class ShaderManager {
     loadShader(options: {
         id: string;
         fixedUniforms: string[];
-        customUniforms: ShaderUniformBase[];
+        customUniforms: any[];
     }): Promise<void>;
     find(id: string): Shader | undefined;
 }

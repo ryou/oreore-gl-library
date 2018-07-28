@@ -33,11 +33,11 @@ export const materialDefinitions = [
         options: [
             {
                 name: 'color',
-                value: new Float32Vector4(1.0, 1.0, 1.0, 1.0),
+                value: new Float32Vector4(0.0, 1.0, 1.0, 1.0),
             },
             {
                 name: 'metallic',
-                value: 1.0,
+                value: 0.0,
             },
             {
                 name: 'normalMagnification',

@@ -1,6 +1,3 @@
-import { Vector4 } from '../float32vector';
-import { ShaderUniformColor, ShaderUniformFloat, ShaderUniformTexture, ShaderUniformTextureCubemap } from '../ShaderUniform'
-
 export const shaderDefinitionArray = [
     {
         id: 'standard',
@@ -11,16 +8,66 @@ export const shaderDefinitionArray = [
             'worldCameraPosition',
         ],
         customUniforms: [
-            new ShaderUniformColor('color', new Vector4(0.5, 0.5, 0.5, 1.0)),
-            new ShaderUniformFloat('metallic', 0.0),
-            new ShaderUniformFloat('normalMagnification', 1.0),
-            // ノーマルマップのY軸方向に乗算する値
-            // DirectX用のノーマルマップを使用する場合は、-1.0を指定
-            new ShaderUniformFloat('normalYMultiple', 1.0),
-            new ShaderUniformTexture('mainTexture', 'default/white', 0),
-            new ShaderUniformTexture('aoTexture', 'default/white', 1),
-            new ShaderUniformTexture('normalTexture', 'default/bump', 2),
-            new ShaderUniformTextureCubemap('cubemapTexture', 'default/cubemap', 3),
+            {
+                type: 'color',
+                name: 'color',
+                options: {
+                    default: [0.5, 0.5, 0.5, 1.0],
+                },
+            },
+            {
+                type: 'float',
+                name: 'metallic',
+                options: {
+                    default: 0.0,
+                },
+            },
+            {
+                type: 'float',
+                name: 'normalMagnification',
+                options: {
+                    default: 1.0,
+                },
+            },
+            {
+                type: 'float',
+                name: 'normalYMultiple',
+                options: {
+                    default: 1.0,
+                },
+            },
+            {
+                type: 'texture',
+                name: 'mainTexture',
+                options: {
+                    default: 'default/white',
+                    index: 0,
+                },
+            },
+            {
+                type: 'texture',
+                name: 'aoTexture',
+                options: {
+                    default: 'default/white',
+                    index: 1,
+                },
+            },
+            {
+                type: 'texture',
+                name: 'normalTexture',
+                options: {
+                    default: 'default/bump',
+                    index: 2,
+                },
+            },
+            {
+                type: 'cubemap',
+                name: 'cubemapTexture',
+                options: {
+                    default: 'default/cubemap',
+                    index: 3,
+                },
+            },
         ],
     },
     {
@@ -31,7 +78,14 @@ export const shaderDefinitionArray = [
             'projectionMatrix',
         ],
         customUniforms: [
-            new ShaderUniformTextureCubemap('cubemapTexture', 'default/cubemap', 0),
+            {
+                type: 'cubemap',
+                name: 'cubemapTexture',
+                options: {
+                    default: 'default/cubemap',
+                    index: 0,
+                },
+            },
         ],
     },
 ];
