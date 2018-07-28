@@ -1,5 +1,4 @@
 import { Model } from './Model';
-import { modelDefinitions } from './data/models';
 import { OBJParser } from './OBJParser';
 
 export class ModelManager {
@@ -9,7 +8,7 @@ export class ModelManager {
 
     protected constructor() {}
 
-    loadModels() {
+    loadModels(modelDefinitions: any[]) {
         const promises = modelDefinitions.map(modelDefinition => {
             return fetch(modelDefinition.path)
                         .then(response => response.text())

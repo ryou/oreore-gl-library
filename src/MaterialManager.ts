@@ -1,5 +1,4 @@
 import { Shader, ShaderManager } from './ShaderManager';
-import { materialDefinitions } from './data/materials';
 
 export class Material {
     protected _options: { name: string, value: any }[];
@@ -41,7 +40,7 @@ export class MaterialManager {
 
     protected constructor() {}
 
-    init() {
+    init(materialDefinitions: any[]) {
         materialDefinitions.forEach(materialDefinition => {
             const shader = ShaderManager.instance.find(materialDefinition.shader);
             if (shader === undefined) {

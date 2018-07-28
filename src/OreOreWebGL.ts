@@ -11,22 +11,29 @@ export class OreOreWebGL {
 
     protected _timer: number | null = null;
 
-    constructor(protected _canvas: HTMLCanvasElement, protected _onLoad: () => void) {
+    constructor(
+        protected _canvas: HTMLCanvasElement,
+        shaderDefinitionArray: any[],
+        textureDefinitionArray: any[],
+        modelDefinitionArray: any[],
+        materialDefinitionArray: any[],
+        protected _onLoad: () => void
+    ) {
         const gl = this._canvas.getContext('webgl');
         if (gl !== null) {
             this._gl = gl;
 
             ShaderManager.instance.setContext(gl);
-            const loadShaderPromise = ShaderManager.instance.loadShaders();
+            const loadShaderPromise = ShaderManager.instance.loadShaders(shaderDefinitionArray);
         
             TextureManager.instance.setContext(gl);
-            const loadTexturePromise = TextureManager.instance.loadTextures();
+            const loadTexturePromise = TextureManager.instance.loadTextures(textureDefinitionArray);
         
-            const loadModelPromise = ModelManager.instance.loadModels();
+            const loadModelPromise = ModelManager.instance.loadModels(modelDefinitionArray);
         
             Promise.all([loadShaderPromise, loadTexturePromise, loadModelPromise])
                 .then(() => {
-                    MaterialManager.instance.init();
+                    MaterialManager.instance.init(materialDefinitionArray);
                     
                     this._onLoad();
                 });

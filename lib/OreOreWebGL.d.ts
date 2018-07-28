@@ -5,7 +5,7 @@ export declare class OreOreWebGL {
     protected _gl: WebGLRenderingContext;
     protected _templates: SubstanceTemplate[];
     protected _timer: number | null;
-    constructor(_canvas: HTMLCanvasElement, _onLoad: () => void);
+    constructor(_canvas: HTMLCanvasElement, shaderDefinitionArray: any[], textureDefinitionArray: any[], modelDefinitionArray: any[], materialDefinitionArray: any[], _onLoad: () => void);
     readonly gl: WebGLRenderingContext;
     protected mainLoop(): void;
     addTemplate(template: SubstanceTemplate): void;

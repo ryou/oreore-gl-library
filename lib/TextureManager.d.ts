@@ -15,7 +15,7 @@ export declare class TextureManager {
     protected _textures: Texture[];
     protected constructor();
     setContext(context: WebGLRenderingContext): void;
-    loadTextures(): Promise<{}[]>;
+    loadTextures(textures: any[]): Promise<{}[]>;
     loadTexture(textureDefinition: TextureDefinition): Promise<{}>;
     loadCubemapTexture(textureDefinition: TextureDefinition): Promise<void>;
     find(id: string): Texture | undefined;

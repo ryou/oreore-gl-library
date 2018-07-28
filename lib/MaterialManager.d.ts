@@ -23,6 +23,6 @@ export declare class MaterialManager {
     static instance: MaterialManager;
     protected _materials: Material[];
     protected constructor();
-    init(): void;
+    init(materialDefinitions: any[]): void;
     find(id: string): Material | undefined;
 }

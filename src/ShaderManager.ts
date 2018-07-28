@@ -1,4 +1,3 @@
-import { shaderDefinitionArray } from './data/shader';
 import { Matrix4x4 } from './matrix';
 import { ShaderUniformBase, ShaderUniformFloat, ShaderUniformTexture, ShaderUniformMatrix4, ShaderUniformVector3, ShaderUniformColor, ShaderUniformTextureCubemap } from './ShaderUniform';
 
@@ -120,7 +119,7 @@ export class ShaderManager {
         this._gl = gl;
     }
 
-    loadShaders() {
+    loadShaders(shaderDefinitionArray: any[]) {
         const promises = shaderDefinitionArray.map(item => this.loadShader(item));
 
         return Promise.all(promises);

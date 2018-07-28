@@ -1,5 +1,3 @@
-import { textures } from './data/textures';
-
 export interface TextureDefinition {
     id: string;
     path: string;
@@ -28,7 +26,7 @@ export class TextureManager {
         this._gl = context;
     }
 
-    loadTextures() {
+    loadTextures(textures: any[]) {
         const promises = textures.map(textureDefinition => {
             const type = textureDefinition.type;
             switch(type) {
