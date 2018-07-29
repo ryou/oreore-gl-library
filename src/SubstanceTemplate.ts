@@ -1,14 +1,14 @@
 import { Material, MaterialManager } from './MaterialManager';
 import { Model } from './Model';
 import { ModelManager } from './ModelManager';
-import { Float32Vector3 } from './float32vector';
+import { Float32Vector3, Vector3 } from './float32vector';
 import { Transform } from './transform';
 import { Matrix4x4 } from './matrix';
 import { CameraManager } from './CameraManager';
 
 export class Substance {
-    protected _velocity: Float32Vector3;
-    protected _accell: Float32Vector3;
+    protected _velocity: Float32Vector3 = new Vector3(0, 0, 0);
+    protected _angularVelocity: Float32Vector3 = new Vector3(0, 0, 0);
     protected _transform: Transform = new Transform();
 
     constructor(protected _template: SubstanceTemplate) {}
@@ -17,7 +17,17 @@ export class Substance {
         return this._transform;
     }
 
+    set velocity(velocity: Float32Vector3) {
+        this._velocity = velocity;
+    }
+
+    set angularVelocity(velocity: Float32Vector3) {
+        this._angularVelocity = velocity;
+    }
+
     update() {
+        this.transform.addPosition(this._velocity.x, this._velocity.y, this._velocity.z);
+        this.transform.addRotation(this._angularVelocity.x, this._angularVelocity.y, this._angularVelocity.z);
     }
 
     render(context: WebGLRenderingContext, indexSize: number) {
@@ -90,6 +100,10 @@ export class SubstanceTemplate {
         this._substances.push(substance);
 
         return substance;
+    }
+
+    update() {
+        this._substances.forEach(substance => substance.update());
     }
 
     render() {

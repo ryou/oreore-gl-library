@@ -50,6 +50,7 @@ export class OreOreWebGL {
     protected mainLoop() {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
+        this._templates.forEach(template => template.update());
         this._templates.forEach(template => template.render());
 
         this.gl.flush();
