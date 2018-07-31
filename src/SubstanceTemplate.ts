@@ -1,7 +1,7 @@
 import { Material, MaterialManager } from './MaterialManager';
 import { Model } from './Model';
 import { ModelManager } from './ModelManager';
-import { Float32Vector3, Vector3 } from './float32vector';
+import { Float32Vector3, Vector3, Vector4 } from './float32vector';
 import { Transform } from './transform';
 import { Matrix4x4 } from './matrix';
 import { CameraManager } from './CameraManager';
@@ -39,7 +39,7 @@ export class Substance {
             far: 1000,
         });
         const camera = cameraManagerInstance.activeCamera;
-        let viewMatrix = camera.transform.matrix;
+        let viewMatrix = camera.transform.matrix.inverse();
 
         this._template.material.shader.fixedUniforms.forEach(uniform => {
             switch(uniform.name) {
@@ -53,7 +53,21 @@ export class Substance {
                     this._template.material.shader.setUniform('projectionMatrix', projectionMatrix);
                     break;
                 case 'worldCameraPosition':
-                    this._template.material.shader.setUniform('worldCameraPosition', camera.transform.position.values);
+                    {
+                        const localCameraPos4 = new Vector4(
+                            camera.transform.position.x,
+                            camera.transform.position.y,
+                            camera.transform.position.z,
+                            1
+                        );
+                        const worldCameraPos4 = localCameraPos4.mulByMatrix(camera.transform.matrix);
+                        const worldCameraPosition = new Vector3(
+                            worldCameraPos4.x / worldCameraPos4.w,
+                            worldCameraPos4.y / worldCameraPos4.w,
+                            worldCameraPos4.z / worldCameraPos4.w
+                        );
+                        this._template.material.shader.setUniform('worldCameraPosition', worldCameraPosition.values);
+                    }
                     break;
                 default:
                     console.error(`undefined uniform ${uniform.name}`);

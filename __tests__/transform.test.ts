@@ -55,8 +55,8 @@ describe('Transform', () => {
             far: 100,
         });
 
-        const modelMatrix = object.matrix.inverse();
-        const viewMatrix = camera.matrix;
+        const modelMatrix = object.matrix;
+        const viewMatrix = camera.matrix.inverse();
         const mvpMatrix = projectionMatrix.mulByMatrix(viewMatrix).mulByMatrix(modelMatrix);
 
         const target = new Vector4(0, 0, 0, 1);
