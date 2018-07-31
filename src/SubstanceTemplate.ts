@@ -53,21 +53,7 @@ export class Substance {
                     this._template.material.shader.setUniform('projectionMatrix', projectionMatrix);
                     break;
                 case 'worldCameraPosition':
-                    {
-                        const localCameraPos4 = new Vector4(
-                            camera.transform.position.x,
-                            camera.transform.position.y,
-                            camera.transform.position.z,
-                            1
-                        );
-                        const worldCameraPos4 = localCameraPos4.mulByMatrix(camera.transform.matrix);
-                        const worldCameraPosition = new Vector3(
-                            worldCameraPos4.x / worldCameraPos4.w,
-                            worldCameraPos4.y / worldCameraPos4.w,
-                            worldCameraPos4.z / worldCameraPos4.w
-                        );
-                        this._template.material.shader.setUniform('worldCameraPosition', worldCameraPosition.values);
-                    }
+                    this._template.material.shader.setUniform('worldCameraPosition', camera.transform.position.values);
                     break;
                 default:
                     console.error(`undefined uniform ${uniform.name}`);

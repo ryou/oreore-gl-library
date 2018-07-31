@@ -56,11 +56,12 @@ export class Transform {
 
     // 変換行列の返却
     get matrix() {
-        return Matrix4x4.scaling(this.scale.x, this.scale.y, this.scale.z)
+        return Matrix4x4.identity
+                    .translate(this.position.x, this.position.y, this.position.z)
+                    .scale(this.scale.x, this.scale.y, this.scale.z)
                     .rotateX(this.rotate.x)
                     .rotateY(this.rotate.y)
-                    .rotateZ(this.rotate.z)
-                    .translate(this.position.x, this.position.y, this.position.z);
+                    .rotateZ(this.rotate.z);
     }
 
     static mulVectorAndMatrix(matrix: Matrix4x4, vector: Float32Vector3) {
