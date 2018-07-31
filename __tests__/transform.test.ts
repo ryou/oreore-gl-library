@@ -1,4 +1,4 @@
-import { Float32Vector3, Vector3 } from '../src/float32vector';
+import { Float32Vector3, Vector3, Vector4 } from '../src/float32vector';
 import { Matrix4x4 } from '../src/matrix';
 import { Transform } from '../src/transform';
 
@@ -38,5 +38,32 @@ describe('Transform', () => {
                                 .translate(1, 2, 3);
 
         expect(actual.values).toEqual(expectMatrix.values);
+    });
+
+    test('MVP Conversion', () => {
+        const object = new Transform();
+        object.position = new Vector3(100, 100, 0);
+        const camera = new Transform();
+        camera.position = new Vector3(0, 0, 0);
+
+        const projectionMatrix = Matrix4x4.orthographic({
+            top: 100,
+            bottom: -100,
+            left: -100,
+            right: 100,
+            near: 0,
+            far: 100,
+        });
+
+        const modelMatrix = object.matrix.inverse();
+        const viewMatrix = camera.matrix;
+        const mvpMatrix = projectionMatrix.mulByMatrix(viewMatrix).mulByMatrix(modelMatrix);
+
+        const target = new Vector4(0, 0, 0, 1);
+        const result = target.mulByMatrix(mvpMatrix);
+
+        const expectVector = new Vector4(-1, -1, -1, 1);
+
+        expect(result.values).toEqual(expectVector.values);
     });
 });
