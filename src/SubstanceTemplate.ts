@@ -1,7 +1,7 @@
 import { Material, MaterialManager } from './MaterialManager';
 import { Model } from './Model';
 import { ModelManager } from './ModelManager';
-import { Float32Vector3, Vector3, Vector4 } from './float32vector';
+import { Float32Vector3, Vector3 } from './float32vector';
 import { Transform } from './transform';
 import { Matrix4x4 } from './matrix';
 import { CameraManager } from './CameraManager';
