@@ -19,6 +19,7 @@ export class Shader {
                 case 'modelMatrix':
                 case 'viewMatrix':
                 case 'projectionMatrix':
+                case 'localNormal2WorldMatrix':
                     this._fixedUniforms.push(new ShaderUniformMatrix4(uniform, Matrix4x4.identity));
                     break;
                 case 'worldCameraPosition':

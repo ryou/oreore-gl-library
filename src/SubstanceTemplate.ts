@@ -52,6 +52,13 @@ export class Substance {
                 case 'projectionMatrix':
                     this._template.material.shader.setUniform('projectionMatrix', projectionMatrix);
                     break;
+                case 'localNormal2WorldMatrix':
+                    {
+                        const localNormal2WorldTransform = new Transform();
+                        localNormal2WorldTransform.rotate = this.transform.rotate;
+                        this._template.material.shader.setUniform('localNormal2WorldMatrix', localNormal2WorldTransform.matrix);
+                    }
+                    break;
                 case 'worldCameraPosition':
                     this._template.material.shader.setUniform('worldCameraPosition', camera.transform.position.values);
                     break;
