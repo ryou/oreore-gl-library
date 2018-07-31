@@ -19,6 +19,7 @@ export class MouseDrag {
         this._targetDOM.addEventListener('mousedown', (e) => this.onMouseDown(e));
         this._targetDOM.addEventListener('mousemove', (e) => this.onMouseMove(e));
         this._targetDOM.addEventListener('mouseup', (e) => this.onMouseUp(e));
+        this._targetDOM.addEventListener('mouseleave', (e) => this.onMouseUp(e));
     }
 
     set onDrag(callback: (x: number, y: number) => void) {
