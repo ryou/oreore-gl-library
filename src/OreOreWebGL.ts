@@ -3,6 +3,7 @@ import { TextureManager } from './TextureManager';
 import { MaterialManager } from './MaterialManager';
 import { ModelManager } from './ModelManager';
 import { SubstanceTemplate } from './SubstanceTemplate';
+import { LoopController } from './LoopController';
 
 export class OreOreWebGL {
     protected _gl: WebGLRenderingContext;
@@ -10,6 +11,8 @@ export class OreOreWebGL {
     protected _templates: SubstanceTemplate[] = [];
 
     protected _timer: number | null = null;
+
+    protected _loopController: LoopController | null = null;
 
     constructor(
         protected _canvas: HTMLCanvasElement,
@@ -34,6 +37,12 @@ export class OreOreWebGL {
             Promise.all([loadShaderPromise, loadTexturePromise, loadModelPromise])
                 .then(() => {
                     MaterialManager.instance.init(materialDefinitionArray);
+
+                    this._loopController = new LoopController(
+                        () => { this.update(); },
+                        () => { this.render(); },
+                        30
+                    );
                     
                     this._onLoad();
                 });
@@ -47,10 +56,13 @@ export class OreOreWebGL {
         return this._gl;
     }
 
-    protected mainLoop() {
+    protected update() {
+        this._templates.forEach(template => template.update());
+    }
+
+    protected render() {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-        this._templates.forEach(template => template.update());
         this._templates.forEach(template => template.render());
 
         this.gl.flush();
@@ -61,14 +73,12 @@ export class OreOreWebGL {
     }
 
     play() {
-        if (this._timer !== null) return;
-
-        this._timer = setInterval(() => {
-            this.mainLoop();
-        }, 33);
+        if (this._loopController !== null) this._loopController.start();
+        else console.error('loop controller is null.');
     }
 
     pause() {
-        if (this._timer !== null) clearInterval(this._timer);
+        if (this._loopController !== null) this._loopController.pause();
+        else console.error('loop controller is null.');
     }
 }
