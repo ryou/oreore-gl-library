@@ -113,6 +113,7 @@ export class ShaderManager {
 
     protected _shaders: Shader[] = [];
     protected _gl: WebGLRenderingContext;
+    protected _shaderDirectory: string;
 
     protected constructor() {}
 
@@ -120,15 +121,17 @@ export class ShaderManager {
         this._gl = gl;
     }
 
-    loadShaders(shaderDefinitionArray: any[]) {
-        const promises = shaderDefinitionArray.map(item => this.loadShader(item));
+    loadShaders(shaderDefinitionArray: any) {
+        this._shaderDirectory = shaderDefinitionArray.directory;
+        const shaders: any[] = shaderDefinitionArray.shaders;
+        const promises = shaders.map(item => this.loadShader(item));
 
         return Promise.all(promises);
     }
 
     loadShader(options: {id: string, fixedUniforms: string[], customUniforms: any[]}) {
-        const loadVertexShader = fetch(`./shaders/${options.id}/vertex_shader.glsl`);
-        const loadFragmentShader = fetch(`./shaders/${options.id}/fragment_shader.glsl`);
+        const loadVertexShader = fetch(`${this._shaderDirectory}/${options.id}/vertex_shader.glsl`);
+        const loadFragmentShader = fetch(`${this._shaderDirectory}/${options.id}/fragment_shader.glsl`);
 
         const cUniforms: ShaderUniformBase[] = [];
         options.customUniforms.forEach(uniform => {

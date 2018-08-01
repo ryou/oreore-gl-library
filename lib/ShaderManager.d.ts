@@ -18,9 +18,10 @@ export declare class ShaderManager {
     static instance: ShaderManager;
     protected _shaders: Shader[];
     protected _gl: WebGLRenderingContext;
+    protected _shaderDirectory: string;
     protected constructor();
     setContext(gl: WebGLRenderingContext): void;
-    loadShaders(shaderDefinitionArray: any[]): Promise<void[]>;
+    loadShaders(shaderDefinitionArray: any): Promise<void[]>;
     loadShader(options: {
         id: string;
         fixedUniforms: string[];
